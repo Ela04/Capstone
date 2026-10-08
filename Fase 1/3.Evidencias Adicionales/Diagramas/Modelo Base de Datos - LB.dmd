@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="Modelo Base de Datos - LB" id="09470B54-A4E4-52BC-AC0D-BA756EE3CF87" version="3.5">
+<createdBy>Ela</createdBy>
+<createdTime>2026-10-03 16:59:09 UTC</createdTime>
+<ownerDesignName>Modelo Base de Datos - LB</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>09470B54-A4E4-52BC-AC0D-BA756EE3CF87</designId>
+<usedDesignStorageDescriptors>
+<designDescr class="oracle.dbtools.crest.model.design.Design$DesignStorageDesc" id="E30202D1-1FF6-7F7E-47EF-AFF7D9361DD4">
+<designStoragePath>C:\lifebetter_schema_v2.sql</designStoragePath>
+</designDescr>
+</usedDesignStorageDescriptors>
+</OSDM_Design>
