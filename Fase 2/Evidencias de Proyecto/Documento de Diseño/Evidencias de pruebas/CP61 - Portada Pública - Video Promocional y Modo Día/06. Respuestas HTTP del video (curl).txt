@@ -1,0 +1,7 @@
+Verificación manual del video promocional sobre el servidor local (20-11-2026, commit 7ba390c)
+
+GET /video/lifebetter-promo.mp4  -> HTTP 200 (completo)
+GET /video/lifebetter-promo.mp4  Range: bytes=1000-1999 -> HTTP 206, Content-Range: bytes 1000-1999/12752792, Content-Length: 1000
+GET /video/lifebetter-promo.webm -> HTTP 200 (completo)
+GET /video/lifebetter-promo.webm Range: bytes=1000-1999 -> HTTP 206, Content-Range: bytes 1000-1999/8459000, Content-Length: 1000
+GET /video/lifebetter-promo.avi  -> HTTP 404

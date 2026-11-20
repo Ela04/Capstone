@@ -1,0 +1,6 @@
+.colabsync/
+.vscode/
+~$*
+*.tmp
+Thumbs.db
+desktop.ini
