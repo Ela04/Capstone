@@ -1,0 +1,68 @@
+erDiagram
+    Usuario_Condominio
+    Usuario ||--o{ Usuario_Condominio : "user"
+    Condominio ||--o{ Usuario_Condominio : "condominium"
+    Usuario
+    Publicacion_Foro
+    Usuario ||--o{ Publicacion_Foro : "author"
+    Comentario_Foro
+    Publicacion_Foro ||--o{ Comentario_Foro : "post"
+    Ficha_Empleado
+    Usuario ||--o| Ficha_Empleado : "user"
+    Condominio
+    Departamento
+    Condominio ||--o{ Departamento : "condominium"
+    Usuario ||--o{ Departamento : "resident"
+    Inspeccion_Fisica
+    Departamento ||--o{ Inspeccion_Fisica : "department"
+    Estacionamiento
+    Departamento ||--o{ Estacionamiento : "department"
+    Estacionamiento ||--o{ Estacionamiento : "blocking_spot"
+    Mejora_Edificio
+    Inspeccion_Fisica ||--o{ Mejora_Edificio : "related_inspection"
+    Gasto_Comun
+    Condominio ||--o{ Gasto_Comun : "condominium"
+    Boleta
+    Departamento ||--o{ Boleta : "department"
+    Gasto_Comun ||--o{ Boleta : "common_expense"
+    Multa
+    Departamento ||--o{ Multa : "department"
+    Boleta ||--o{ Multa : "expense_bill"
+    Transaccion_Webpay
+    Boleta ||--o{ Transaccion_Webpay : "bill"
+    Espacio_Comun
+    Condominio ||--o{ Espacio_Comun : "condominium"
+    Reserva
+    Espacio_Comun ||--o{ Reserva : "common_area"
+    Departamento ||--o{ Reserva : "department"
+    Vehiculo_Autorizado
+    Departamento ||--o{ Vehiculo_Autorizado : "department"
+    Lectura_Patente
+    Vehiculo_Autorizado ||--o{ Lectura_Patente : "matched_vehicle"
+    Estacionamiento ||--o{ Lectura_Patente : "parking_spot"
+    Pase_QR
+    Departamento ||--o{ Pase_QR : "department"
+    Encomienda
+    Departamento ||--o{ Encomienda : "department"
+    Novedad_Bitacora
+    Condominio ||--o{ Novedad_Bitacora : "condominium"
+    Notificacion
+    Usuario ||--o{ Notificacion : "recipient"
+    Camara
+    Condominio ||--o{ Camara : "condominium"
+    Reclamo
+    Departamento ||--o{ Reclamo : "department"
+    Mascota
+    Departamento ||--o{ Mascota : "department"
+    Convenio_Condominio
+    Convenio ||--o{ Convenio_Condominio : "partner"
+    Condominio ||--o{ Convenio_Condominio : "condominium"
+    Convenio
+    Dispositivo_Push
+    Usuario ||--o{ Dispositivo_Push : "user"
+    Ticket_Soporte
+    Usuario ||--o{ Ticket_Soporte : "requester"
+    Mensaje_Soporte
+    Ticket_Soporte ||--o{ Mensaje_Soporte : "ticket"
+    Condominio ||--o{ Solicitud_Residente : "condominium"
+    Departamento ||--o{ Solicitud_Residente : "department"

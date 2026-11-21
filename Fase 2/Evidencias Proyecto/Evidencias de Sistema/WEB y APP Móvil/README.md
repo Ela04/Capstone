@@ -1,8 +1,8 @@
 # Evidencias de pruebas — LifeBetter AIoT
 
-Una carpeta por caso de la planilla `Casos_de_Prueba_LifeBetter.xlsx` (CP01 a CP61, 65 casos aprobados).
+Una carpeta por caso de la planilla `Casos_de_Prueba_LifeBetter.xlsx` (CP01 a CP64, 68 casos aprobados).
 Las capturas se tomaron sobre el sistema en ejecución en el entorno local (Chrome automatizado con Playwright y llamadas reales a la API), con datos ficticios de `seed_data`. Se guardaron en JPG para reducir el peso del repositorio.
-La salida completa de la suite automatizada está en `../Pruebas automatizadas/salida_pytest_commit_7ba390c.txt` (104 passed).
+La salida completa de la suite automatizada está en `Pruebas automatizadas/salida_pytest_commit_3dc7375.txt` (115 passed).
 
 | Caso | Qué se prueba | Archivos |
 |---|---|---|
@@ -71,3 +71,6 @@ La salida completa de la suite automatizada está en `../Pruebas automatizadas/s
 | [CP59](<CP59 - Mesa de Soporte LifeBetter - Tickets, Acceso y SLA>) | Mesa de Soporte LifeBetter - Tickets, Acceso y SLA | 15 |
 | [CP60](<CP60 - Informe Mensual - KPIs, PDF y Acceso>) | Informe Mensual - KPIs, PDF y Acceso | 5 |
 | [CP61](<CP61 - Portada Pública - Video Promocional y Modo Día>) | Portada Pública - Video Promocional y Modo Día | 5 |
+| [CP62](<CP62 - Seguridad AIoT - Cámara IA por Foto (Web y App)>) | Seguridad AIoT - Cámara IA por foto (web y app) | 7 |
+| [CP63](<CP63 - Gestión de Residentes - Solicitudes de Alta y Baja>) | Gestión de Residentes - Solicitudes de alta y baja | 10 |
+| [CP64](<CP64 - Gastos Comunes - Multas en UTM>) | Gastos Comunes - Multas en UTM | 5 |

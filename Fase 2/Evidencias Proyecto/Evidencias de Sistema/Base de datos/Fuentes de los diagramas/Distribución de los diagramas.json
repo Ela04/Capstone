@@ -1,0 +1,249 @@
+{
+ "Modelo lógico": {
+  "rows": [
+   [
+    "Ficha_Empleado",
+    "Notificacion",
+    "Dispositivo_Push",
+    "Solicitud_Residente",
+    "Ticket_Soporte",
+    "Mensaje_Soporte",
+    "Usuario_Condominio",
+    "Convenio",
+    "Convenio_Condominio",
+    "Publicacion_Foro",
+    "Comentario_Foro",
+    "Reclamo",
+    "Mascota"
+   ],
+   [
+    "Usuario",
+    "Condominio",
+    "Departamento"
+   ],
+   [
+    "Gasto_Comun",
+    "Boleta",
+    "Transaccion_Webpay",
+    "Multa",
+    "Espacio_Comun",
+    "Reserva",
+    "Camara",
+    "Novedad_Bitacora",
+    "Pase_QR",
+    "Encomienda",
+    "Inspeccion_Fisica",
+    "Mejora_Edificio",
+    "Vehiculo_Autorizado",
+    "Lectura_Patente",
+    "Estacionamiento"
+   ]
+  ],
+  "hubs": [
+   "Usuario",
+   "Condominio",
+   "Departamento"
+  ],
+  "areas": [
+   {
+    "name": "PERSONAL Y AVISOS",
+    "ids": [
+     "Ficha_Empleado",
+     "Notificacion",
+     "Dispositivo_Push",
+     "Solicitud_Residente"
+    ],
+    "pos": "top"
+   },
+   {
+    "name": "MESA DE SOPORTE",
+    "ids": [
+     "Ticket_Soporte",
+     "Mensaje_Soporte"
+    ],
+    "pos": "top"
+   },
+   {
+    "name": "ASIGNACIÓN",
+    "ids": [
+     "Usuario_Condominio"
+    ],
+    "pos": "top"
+   },
+   {
+    "name": "CONVENIOS",
+    "ids": [
+     "Convenio",
+     "Convenio_Condominio"
+    ],
+    "pos": "top"
+   },
+   {
+    "name": "COMUNIDAD",
+    "ids": [
+     "Publicacion_Foro",
+     "Comentario_Foro",
+     "Reclamo",
+     "Mascota"
+    ],
+    "pos": "top"
+   },
+   {
+    "name": "FINANZAS",
+    "ids": [
+     "Gasto_Comun",
+     "Boleta",
+     "Transaccion_Webpay",
+     "Multa"
+    ],
+    "pos": "bottom"
+   },
+   {
+    "name": "RESERVAS",
+    "ids": [
+     "Espacio_Comun",
+     "Reserva"
+    ],
+    "pos": "bottom"
+   },
+   {
+    "name": "PORTERÍA",
+    "ids": [
+     "Camara",
+     "Novedad_Bitacora",
+     "Pase_QR",
+     "Encomienda"
+    ],
+    "pos": "bottom"
+   },
+   {
+    "name": "PATENTES Y ESTACIONAMIENTOS",
+    "ids": [
+     "Vehiculo_Autorizado",
+     "Lectura_Patente",
+     "Estacionamiento"
+    ],
+    "pos": "bottom"
+   },
+   {
+    "name": "INFRAESTRUCTURA",
+    "ids": [
+     "Inspeccion_Fisica",
+     "Mejora_Edificio"
+    ],
+    "pos": "bottom"
+   }
+  ]
+ },
+ "Relacional 1 - Núcleo": {
+  "rows": [
+   [
+    "users_staffprofile",
+    "security_notification",
+    "mobile_api_pushdevice"
+   ],
+   [
+    "users_user",
+    "condo_condominium"
+   ],
+   [
+    "users_user_condominiums",
+    "condo_department",
+    "users_residentrequest"
+   ]
+  ],
+  "stubs": []
+ },
+ "Relacional 2 - Finanzas": {
+  "rows": [
+   [
+    "payments_transbanktransaction",
+    "expenses_expensebill",
+    "expenses_condominiumfine",
+    "expenses_commonexpense"
+   ],
+   [
+    "users_user",
+    "condo_department",
+    "condo_condominium"
+   ],
+   [
+    "espacioscomunes_reservation",
+    "espacioscomunes_commonarea"
+   ]
+  ],
+  "stubs": [
+   "users_user",
+   "condo_department",
+   "condo_condominium"
+  ]
+ },
+ "Relacional 3 - Seguridad": {
+  "rows": [
+   [
+    "security_authorizedvehicle",
+    "security_platerecognitionlog",
+    "condo_parkingspot"
+   ],
+   [
+    "users_user",
+    "condo_condominium",
+    "condo_department"
+   ],
+   [
+    "security_visitorpassqr",
+    "security_parceldelivery",
+    "security_conciergelogbookentry",
+    "security_securitycamera"
+   ]
+  ],
+  "stubs": [
+   "users_user",
+   "condo_condominium",
+   "condo_department"
+  ]
+ },
+ "Relacional 4 - Comunidad e infraestructura": {
+  "rows": [
+   [
+    "users_forumcomment",
+    "users_forumpost",
+    "claims_claimticket",
+    "pets_pet"
+   ],
+   [
+    "users_user",
+    "condo_condominium",
+    "condo_department"
+   ],
+   [
+    "partnerships_partner",
+    "partnerships_partner_condominiums",
+    "condo_physicalinspection",
+    "condo_buildingimprovement"
+   ]
+  ],
+  "stubs": [
+   "users_user",
+   "condo_condominium",
+   "condo_department"
+  ]
+ },
+ "Relacional 5 - Mesa de soporte": {
+  "rows": [
+   [
+    "soporte_supportticket",
+    "soporte_supportmessage"
+   ],
+   [
+    "users_user",
+    "condo_condominium"
+   ]
+  ],
+  "stubs": [
+   "users_user",
+   "condo_condominium"
+  ]
+ },
+ "nota": "Filas de arriba hacia abajo. En los relacionales, \"stubs\" son tablas de otra área que se muestran solo con su id. En el modelo lógico, las relaciones dibujadas son las de \"Modelo Lógico.mmd\"."
+}
