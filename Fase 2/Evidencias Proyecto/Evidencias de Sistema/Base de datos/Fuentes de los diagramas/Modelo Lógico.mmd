@@ -66,3 +66,5 @@ erDiagram
     Ticket_Soporte ||--o{ Mensaje_Soporte : "ticket"
     Condominio ||--o{ Solicitud_Residente : "condominium"
     Departamento ||--o{ Solicitud_Residente : "department"
+    Condominio ||--o{ Alerta_Emergencia : "condominium"
+    Novedad_Bitacora ||--o| Alerta_Emergencia : "logbook_entry"

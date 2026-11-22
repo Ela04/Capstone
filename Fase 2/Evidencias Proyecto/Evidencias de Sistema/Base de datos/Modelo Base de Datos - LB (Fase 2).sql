@@ -371,6 +371,23 @@ CREATE TABLE "security_securitycamera" (
     "created_at" TIMESTAMP NOT NULL
 );
 
+-- Seguridad, accesos y conserjería: Alerta de emergencia
+CREATE TABLE "security_emergencyalert" (
+    "id" BIGSERIAL PRIMARY KEY,
+    "condominium_id" BIGINT NOT NULL,
+    "kind" VARCHAR(10) NOT NULL,
+    "status" VARCHAR(8) NOT NULL,
+    "location" VARCHAR(120) NOT NULL,
+    "detail" TEXT NOT NULL,
+    "triggered_by_id" BIGINT,
+    "created_at" TIMESTAMP NOT NULL,
+    "closed_by_id" BIGINT,
+    "closed_at" TIMESTAMP,
+    "closing_note" TEXT NOT NULL,
+    "notified_count" INTEGER NOT NULL,
+    "logbook_entry_id" BIGINT UNIQUE
+);
+
 -- Sugerencias y reclamos: Sugerencia / Reclamo
 CREATE TABLE "claims_claimticket" (
     "id" BIGSERIAL PRIMARY KEY,
@@ -535,6 +552,10 @@ ALTER TABLE "security_conciergelogbookentry" ADD CONSTRAINT "fk_security_concier
 ALTER TABLE "security_conciergelogbookentry" ADD CONSTRAINT "fk_security_conciergelogbookentry_resolved_by_id" FOREIGN KEY ("resolved_by_id") REFERENCES "users_user" ("id");
 ALTER TABLE "security_notification" ADD CONSTRAINT "fk_security_notification_recipient_id" FOREIGN KEY ("recipient_id") REFERENCES "users_user" ("id");
 ALTER TABLE "security_securitycamera" ADD CONSTRAINT "fk_security_securitycamera_condominium_id" FOREIGN KEY ("condominium_id") REFERENCES "condo_condominium" ("id");
+ALTER TABLE "security_emergencyalert" ADD CONSTRAINT "fk_security_emergencyalert_condominium_id" FOREIGN KEY ("condominium_id") REFERENCES "condo_condominium" ("id");
+ALTER TABLE "security_emergencyalert" ADD CONSTRAINT "fk_security_emergencyalert_triggered_by_id" FOREIGN KEY ("triggered_by_id") REFERENCES "users_user" ("id");
+ALTER TABLE "security_emergencyalert" ADD CONSTRAINT "fk_security_emergencyalert_closed_by_id" FOREIGN KEY ("closed_by_id") REFERENCES "users_user" ("id");
+ALTER TABLE "security_emergencyalert" ADD CONSTRAINT "fk_security_emergencyalert_logbook_entry_id" FOREIGN KEY ("logbook_entry_id") REFERENCES "security_conciergelogbookentry" ("id");
 ALTER TABLE "claims_claimticket" ADD CONSTRAINT "fk_claims_claimticket_condominium_id" FOREIGN KEY ("condominium_id") REFERENCES "condo_condominium" ("id");
 ALTER TABLE "claims_claimticket" ADD CONSTRAINT "fk_claims_claimticket_department_id" FOREIGN KEY ("department_id") REFERENCES "condo_department" ("id");
 ALTER TABLE "claims_claimticket" ADD CONSTRAINT "fk_claims_claimticket_author_id" FOREIGN KEY ("author_id") REFERENCES "users_user" ("id");

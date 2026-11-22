@@ -1,12 +1,12 @@
 # Modelo de base de datos — LifeBetter AIoT (Fase 2)
 
-Modelo actualizado según la base de datos que usa hoy la plataforma (commit `3dc7375`, 20-11-2026). Reemplaza al modelo de la Fase 1 (`Fase 1/Evidencias Proyecto/Documentos de Diseño/Modelo de base de datos`), que se diseñó en Oracle Data Modeler antes de la implementación.
+Modelo actualizado según la base de datos que usa hoy la plataforma (commit `1386911`, 21-11-2026). Reemplaza al modelo de la Fase 1 (`Fase 1/Evidencias Proyecto/Documentos de Diseño/Modelo de base de datos`), que se diseñó en Oracle Data Modeler antes de la implementación.
 
 ## Archivos
 
 | Archivo | Contenido |
 |---|---|
-| `Diagrama Modelo Lógico - LB (Fase 2).png` | Vista general de las 31 entidades. Al centro están Usuario, Condominio y Departamento, de las que dependen casi todas; arriba personal, soporte, convenios y comunidad, y abajo finanzas, reservas, portería, infraestructura y patentes. Muestra las relaciones principales; las de auditoría (por ejemplo `created_by`) y todas las referencias a Usuario y Condominio están en los diagramas relacionales. |
+| `Diagrama Modelo Lógico - LB (Fase 2).png` | Vista general de las 32 entidades. Al centro están Usuario, Condominio y Departamento, de las que dependen casi todas; arriba personal, soporte, convenios y comunidad, y abajo finanzas, reservas, portería, infraestructura y patentes. Muestra las relaciones principales; las de auditoría (por ejemplo `created_by`) y todas las referencias a Usuario y Condominio están en los diagramas relacionales. |
 | `Diagrama Modelo Relacional 1 - Núcleo - LB (Fase 2).png` | Núcleo: perfiles de usuario arriba, `users_user` y `condo_condominium` al centro, y tablas de unión y solicitudes de residentes abajo; columnas, tipos, claves (P, F, U) y `*` para las obligatorias. Las tablas punteadas son de otra área y se muestran solo con su `id`. |
 | `Diagrama Modelo Relacional 2 - Finanzas - LB (Fase 2).png` | Finanzas: cobros arriba, tablas compartidas al centro y espacios comunes con sus reservas abajo; columnas, tipos, claves (P, F, U) y `*` para las obligatorias. Las tablas punteadas son de otra área y se muestran solo con su `id`. |
 | `Diagrama Modelo Relacional 3 - Seguridad - LB (Fase 2).png` | Seguridad: control vehicular arriba, tablas compartidas al centro y portería abajo; columnas, tipos, claves (P, F, U) y `*` para las obligatorias. Las tablas punteadas son de otra área y se muestran solo con su `id`. |
@@ -36,7 +36,7 @@ Modelo actualizado según la base de datos que usa hoy la plataforma (commit `3d
 | `common_expense_bills` | `expenses_expensebill` |
 | `transbank_transactions` | `payments_transbanktransaction` |
 
-En la Fase 1 había 10 tablas. Hoy el proyecto tiene 31 tablas propias. Las nuevas cubren: gastos comunes por período, multas, personal, foro, inspecciones físicas, estacionamientos, mejoras del edificio, vehículos autorizados y lecturas de patentes (LPR), notificaciones, cámaras, reclamos, mascotas, convenios, dispositivos para notificaciones push, la mesa de soporte y las solicitudes de alta y baja de residentes.
+En la Fase 1 había 10 tablas. Hoy el proyecto tiene 32 tablas propias. Las nuevas cubren: gastos comunes por período, multas, personal, foro, inspecciones físicas, estacionamientos, mejoras del edificio, vehículos autorizados y lecturas de patentes (LPR), notificaciones, cámaras, reclamos, mascotas, convenios, dispositivos para notificaciones push, la mesa de soporte, las solicitudes de alta y baja de residentes y las alertas del botón de emergencia.
 
 ## Tablas del proyecto
 
@@ -309,7 +309,7 @@ En el diagrama, arriba están los cobros (transacciones Webpay, boletas, multas 
 
 ### Diagrama 3 · Seguridad: accesos, patentes, encomiendas y bitácora
 
-En el diagrama, arriba están el control vehicular (vehículos autorizados, lecturas de patentes y estacionamientos), al centro las tablas compartidas (`users_user`, `condo_condominium` y `condo_department`) y abajo la operación de portería (pases QR, encomiendas, bitácora y cámaras).
+En el diagrama, arriba están el control vehicular (vehículos autorizados, lecturas de patentes y estacionamientos), al centro las tablas compartidas (`users_user`, `condo_condominium` y `condo_department`) y abajo la operación de portería (pases QR, encomiendas, bitácora, alertas de emergencia y cámaras).
 
 **`security_authorizedvehicle`** — authorized vehicle
 
@@ -421,6 +421,24 @@ En el diagrama, arriba están el control vehicular (vehículos autorizados, lect
 | `resolved_at` | TIMESTAMP |  | No |  |
 | `created_at` | TIMESTAMP |  | Sí |  |
 
+**`security_emergencyalert`** — Alerta del botón de emergencia
+
+| Columna | Tipo | Clave | Obligatoria | Observación |
+|---|---|---|---|---|
+| `id` | BIGINT | PK | Sí |  |
+| `condominium_id` | BIGINT | FK → `condo_condominium` | Sí |  |
+| `kind` | VARCHAR(10) |  | Sí | Valores: INCENDIO, POLICIA |
+| `status` | VARCHAR(8) |  | Sí | Valores: ACTIVA, CERRADA |
+| `location` | VARCHAR(120) |  | Sí |  |
+| `detail` | TEXT |  | Sí |  |
+| `triggered_by_id` | BIGINT | FK → `users_user` | No |  |
+| `created_at` | TIMESTAMP |  | Sí |  |
+| `closed_by_id` | BIGINT | FK → `users_user` | No |  |
+| `closed_at` | TIMESTAMP |  | No |  |
+| `closing_note` | TEXT |  | Sí |  |
+| `notified_count` | INTEGER |  | Sí |  |
+| `logbook_entry_id` | BIGINT | FK → `security_conciergelogbookentry` | No |  |
+
 **`security_securitycamera`** — Cámara de Seguridad
 
 | Columna | Tipo | Clave | Obligatoria | Observación |
@@ -459,6 +477,10 @@ En el diagrama, arriba están el control vehicular (vehículos autorizados, lect
 - `security_conciergelogbookentry.condominium_id` → `condo_condominium` (muchos a uno)
 - `security_conciergelogbookentry.author_id` → `users_user` (muchos a uno, opcional)
 - `security_conciergelogbookentry.resolved_by_id` → `users_user` (muchos a uno, opcional)
+- `security_emergencyalert.condominium_id` → `condo_condominium` (muchos a uno)
+- `security_emergencyalert.triggered_by_id` → `users_user` (muchos a uno, opcional)
+- `security_emergencyalert.closed_by_id` → `users_user` (muchos a uno, opcional)
+- `security_emergencyalert.logbook_entry_id` → `security_conciergelogbookentry` (uno a uno, opcional)
 - `security_securitycamera.condominium_id` → `condo_condominium` (muchos a uno)
 
 ### Diagrama 4 · Comunidad e infraestructura

@@ -32,6 +32,7 @@
     "Novedad_Bitacora",
     "Pase_QR",
     "Encomienda",
+    "Alerta_Emergencia",
     "Inspeccion_Fisica",
     "Mejora_Edificio",
     "Vehiculo_Autorizado",
@@ -112,7 +113,8 @@
      "Camara",
      "Novedad_Bitacora",
      "Pase_QR",
-     "Encomienda"
+     "Encomienda",
+     "Alerta_Emergencia"
     ],
     "pos": "bottom"
    },
@@ -194,6 +196,7 @@
     "security_visitorpassqr",
     "security_parceldelivery",
     "security_conciergelogbookentry",
+    "security_emergencyalert",
     "security_securitycamera"
    ]
   ],
