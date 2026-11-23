@@ -1,8 +1,8 @@
 # Evidencias de pruebas — LifeBetter AIoT
 
-Una carpeta por caso de la planilla `Casos_de_Prueba_LifeBetter.xlsx` (CP01 a CP66, 70 casos aprobados).
+Una carpeta por caso de la planilla `Casos_de_Prueba_LifeBetter.xlsx` (CP01 a CP71, 75 casos aprobados).
 Las capturas se tomaron sobre el sistema en ejecución en el entorno local (Chrome automatizado con Playwright y llamadas reales a la API), con datos ficticios de `seed_data`. Se guardaron en JPG para reducir el peso del repositorio.
-La salida completa de la suite automatizada está en `Pruebas automatizadas/salida_pytest_commit_1386911.txt` (122 passed).
+La salida completa de la suite automatizada está en `Pruebas automatizadas/salida_pytest_commit_e0832bc.txt` (140 passed).
 
 | Caso | Qué se prueba | Archivos |
 |---|---|---|
@@ -76,3 +76,8 @@ La salida completa de la suite automatizada está en `Pruebas automatizadas/sali
 | [CP64](<CP64 - Gastos Comunes - Multas en UTM>) | Gastos Comunes - Multas en UTM | 5 |
 | [CP65](<CP65 - Seguridad AIoT - Cámara IA con YOLOv9 + OCR>) | Seguridad AIoT - Cámara IA con YOLOv9 + OCR | 6 |
 | [CP66](<CP66 - Conserjería - Botón de Emergencia>) | Conserjería - Botón de emergencia | 7 |
+| [CP67](<CP67 - Seguridad AIoT - Autorización Manual de Patentes>) | Seguridad AIoT - Autorización manual de patentes | 5 |
+| [CP68](<CP68 - Documentos del Condominio - Publicación y Descarga>) | Documentos del condominio - Publicación, visibilidad y descarga | 7 |
+| [CP69](<CP69 - Asistente LifeBetter - Datos del Usuario y Ayuda>) | Asistente LifeBetter - Datos del usuario y ayuda de la plataforma | 3 |
+| [CP70](<CP70 - Configuración - Tema Oscuro y Contraseña>) | Configuración - Tema oscuro y cambio de contraseña (web) | 5 |
+| [CP71](<CP71 - App Móvil - Gráficos, Configuración y Menú del Conserje>) | App móvil - Gráficos, Mi cuenta, tema oscuro y menú del conserje | 9 |

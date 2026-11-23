@@ -14,7 +14,8 @@
     "Publicacion_Foro",
     "Comentario_Foro",
     "Reclamo",
-    "Mascota"
+    "Mascota",
+    "Documento_Condominio"
    ],
    [
     "Usuario",
@@ -86,6 +87,13 @@
      "Comentario_Foro",
      "Reclamo",
      "Mascota"
+    ],
+    "pos": "top"
+   },
+   {
+    "name": "DOCUMENTOS",
+    "ids": [
+     "Documento_Condominio"
     ],
     "pos": "top"
    },
@@ -223,7 +231,8 @@
     "partnerships_partner",
     "partnerships_partner_condominiums",
     "condo_physicalinspection",
-    "condo_buildingimprovement"
+    "condo_buildingimprovement",
+    "condo_condodocument"
    ]
   ],
   "stubs": [

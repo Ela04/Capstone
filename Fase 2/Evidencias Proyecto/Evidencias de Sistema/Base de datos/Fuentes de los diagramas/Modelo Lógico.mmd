@@ -68,3 +68,8 @@ erDiagram
     Departamento ||--o{ Solicitud_Residente : "department"
     Condominio ||--o{ Alerta_Emergencia : "condominium"
     Novedad_Bitacora ||--o| Alerta_Emergencia : "logbook_entry"
+    Condominio ||--o{ Documento_Condominio : "condominium"
+    Departamento ||--o{ Documento_Condominio : "department"
+    Usuario ||--o{ Documento_Condominio : "uploaded_by"
+    Usuario ||--o{ Lectura_Patente : "authorized_by"
+    Departamento ||--o{ Lectura_Patente : "authorized_department"

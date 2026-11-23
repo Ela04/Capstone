@@ -1,6 +1,6 @@
 # Modelo de base de datos — LifeBetter AIoT (Fase 2)
 
-Modelo actualizado según la base de datos que usa hoy la plataforma (commit `1386911`, 21-11-2026). Reemplaza al modelo de la Fase 1 (`Fase 1/Evidencias Proyecto/Documentos de Diseño/Modelo de base de datos`), que se diseñó en Oracle Data Modeler antes de la implementación.
+Modelo actualizado según la base de datos que usa hoy la plataforma (commit `e0832bc`, 23-11-2026). Reemplaza al modelo de la Fase 1 (`Fase 1/Evidencias Proyecto/Documentos de Diseño/Modelo de base de datos`), que se diseñó en Oracle Data Modeler antes de la implementación.
 
 ## Archivos
 
@@ -10,7 +10,7 @@ Modelo actualizado según la base de datos que usa hoy la plataforma (commit `13
 | `Diagrama Modelo Relacional 1 - Núcleo - LB (Fase 2).png` | Núcleo: perfiles de usuario arriba, `users_user` y `condo_condominium` al centro, y tablas de unión y solicitudes de residentes abajo; columnas, tipos, claves (P, F, U) y `*` para las obligatorias. Las tablas punteadas son de otra área y se muestran solo con su `id`. |
 | `Diagrama Modelo Relacional 2 - Finanzas - LB (Fase 2).png` | Finanzas: cobros arriba, tablas compartidas al centro y espacios comunes con sus reservas abajo; columnas, tipos, claves (P, F, U) y `*` para las obligatorias. Las tablas punteadas son de otra área y se muestran solo con su `id`. |
 | `Diagrama Modelo Relacional 3 - Seguridad - LB (Fase 2).png` | Seguridad: control vehicular arriba, tablas compartidas al centro y portería abajo; columnas, tipos, claves (P, F, U) y `*` para las obligatorias. Las tablas punteadas son de otra área y se muestran solo con su `id`. |
-| `Diagrama Modelo Relacional 4 - Comunidad e infraestructura - LB (Fase 2).png` | Comunidad e infraestructura: foro, reclamos y mascotas arriba, tablas compartidas al centro, convenios e infraestructura abajo; columnas, tipos, claves (P, F, U) y `*` para las obligatorias. Las tablas punteadas son de otra área y se muestran solo con su `id`. |
+| `Diagrama Modelo Relacional 4 - Comunidad e infraestructura - LB (Fase 2).png` | Comunidad e infraestructura: foro, reclamos y mascotas arriba, tablas compartidas al centro, convenios, infraestructura y documentos del condominio abajo; columnas, tipos, claves (P, F, U) y `*` para las obligatorias. Las tablas punteadas son de otra área y se muestran solo con su `id`. |
 | `Diagrama Modelo Relacional 5 - Mesa de soporte - LB (Fase 2).png` | Mesa de soporte: tickets y mensajes arriba y tablas compartidas abajo; columnas, tipos, claves (P, F, U) y `*` para las obligatorias. Las tablas punteadas son de otra área y se muestran solo con su `id`. |
 | `Fuentes de los diagramas/` | Distribución por filas de cada diagrama (`Distribución de los diagramas.json`) y lista de relaciones del modelo lógico (`Modelo Lógico.mmd`). Todos los diagramas se dibujaron con una distribución manual para que las relaciones no se crucen. |
 | `Modelo Base de Datos - LB (Fase 2).sql` | Script DDL en sintaxis PostgreSQL: tablas, claves primarias, únicas, foráneas y restricciones. |
@@ -36,7 +36,7 @@ Modelo actualizado según la base de datos que usa hoy la plataforma (commit `13
 | `common_expense_bills` | `expenses_expensebill` |
 | `transbank_transactions` | `payments_transbanktransaction` |
 
-En la Fase 1 había 10 tablas. Hoy el proyecto tiene 32 tablas propias. Las nuevas cubren: gastos comunes por período, multas, personal, foro, inspecciones físicas, estacionamientos, mejoras del edificio, vehículos autorizados y lecturas de patentes (LPR), notificaciones, cámaras, reclamos, mascotas, convenios, dispositivos para notificaciones push, la mesa de soporte, las solicitudes de alta y baja de residentes y las alertas del botón de emergencia.
+En la Fase 1 había 10 tablas. Hoy el proyecto tiene 33 tablas propias. Las nuevas cubren: gastos comunes por período, multas, personal, foro, inspecciones físicas, estacionamientos, mejoras del edificio, vehículos autorizados y lecturas de patentes (LPR), notificaciones, cámaras, reclamos, mascotas, convenios, dispositivos para notificaciones push, la mesa de soporte, las solicitudes de alta y baja de residentes, las alertas del botón de emergencia y los documentos del condominio.
 
 ## Tablas del proyecto
 
@@ -131,7 +131,7 @@ En el diagrama, arriba están las tablas que dependen de un usuario (ficha de em
 |---|---|---|---|---|
 | `id` | BIGINT | PK | Sí |  |
 | `recipient_id` | BIGINT | FK → `users_user` | Sí |  |
-| `category` | VARCHAR(20) |  | Sí | Valores: VEHICULO, ENCOMIENDA, GASTO_COMUN, SEGURIDAD, RECLAMO, SOPORTE, RESIDENTES |
+| `category` | VARCHAR(20) |  | Sí | Valores: VEHICULO, ENCOMIENDA, GASTO_COMUN, SEGURIDAD, RECLAMO, SOPORTE, RESIDENTES, DOCUMENTO |
 | `title` | VARCHAR(140) |  | Sí |  |
 | `message` | TEXT |  | Sí |  |
 | `action_url` | VARCHAR(255) |  | Sí |  |
@@ -332,11 +332,15 @@ En el diagrama, arriba están el control vehicular (vehículos autorizados, lect
 |---|---|---|---|---|
 | `id` | BIGINT | PK | Sí |  |
 | `condominium_id` | BIGINT | FK → `condo_condominium` | Sí |  |
+| `authorized_by_id` | BIGINT | FK → `users_user` | No |  |
+| `authorized_at` | TIMESTAMP |  | No |  |
+| `authorized_department_id` | BIGINT | FK → `condo_department` | No |  |
+| `authorization_note` | VARCHAR(160) |  | Sí |  |
 | `camera_name` | VARCHAR(60) |  | Sí |  |
 | `plate_detected` | VARCHAR(10) |  | Sí |  |
 | `confidence` | NUMERIC(5,2) |  | Sí |  |
 | `direction` | VARCHAR(10) |  | Sí | Valores: ENTRADA, SALIDA |
-| `access_status` | VARCHAR(25) |  | Sí | Valores: AUTORIZADO_RESIDENTE, VISITA_REGISTRADA, NO_AUTORIZADO |
+| `access_status` | VARCHAR(25) |  | Sí | Valores: AUTORIZADO_RESIDENTE, VISITA_REGISTRADA, NO_AUTORIZADO, AUTORIZADO_MANUAL |
 | `matched_vehicle_id` | BIGINT | FK → `security_authorizedvehicle` | No |  |
 | `snapshot_url` | VARCHAR(200) |  | Sí |  |
 | `snapshot` | VARCHAR(100) |  | Sí |  |
@@ -460,6 +464,8 @@ En el diagrama, arriba están el control vehicular (vehículos autorizados, lect
 - `security_authorizedvehicle.department_id` → `condo_department` (muchos a uno)
 - `security_authorizedvehicle.owner_id` → `users_user` (muchos a uno, opcional)
 - `security_platerecognitionlog.condominium_id` → `condo_condominium` (muchos a uno)
+- `security_platerecognitionlog.authorized_by_id` → `users_user` (muchos a uno, opcional)
+- `security_platerecognitionlog.authorized_department_id` → `condo_department` (muchos a uno, opcional)
 - `security_platerecognitionlog.matched_vehicle_id` → `security_authorizedvehicle` (muchos a uno, opcional)
 - `security_platerecognitionlog.parking_spot_id` → `condo_parkingspot` (muchos a uno, opcional)
 - `condo_parkingspot.condominium_id` → `condo_condominium` (muchos a uno)
@@ -485,7 +491,7 @@ En el diagrama, arriba están el control vehicular (vehículos autorizados, lect
 
 ### Diagrama 4 · Comunidad e infraestructura
 
-En el diagrama, arriba está la comunidad (foro, reclamos y mascotas), al centro las tablas compartidas (`users_user`, `condo_condominium` y `condo_department`) y abajo los convenios y la infraestructura (inspecciones físicas y mejoras del edificio).
+En el diagrama, arriba está la comunidad (foro, reclamos y mascotas), al centro las tablas compartidas (`users_user`, `condo_condominium` y `condo_department`) y abajo los convenios, la infraestructura (inspecciones físicas y mejoras del edificio) y los documentos del condominio (`condo_condodocument`).
 
 **`users_forumcomment`** — forum comment
 
@@ -616,6 +622,24 @@ En el diagrama, arriba está la comunidad (foro, reclamos y mascotas), al centro
 | `created_by_id` | BIGINT | FK → `users_user` | No |  |
 | `created_at` | TIMESTAMP |  | Sí |  |
 
+**`condo_condodocument`** — Documento del condominio
+
+| Columna | Tipo | Clave | Obligatoria | Observación |
+|---|---|---|---|---|
+| `id` | BIGINT | PK | Sí |  |
+| `condominium_id` | BIGINT | FK → `condo_condominium` | Sí |  |
+| `department_id` | BIGINT | FK → `condo_department` | No |  |
+| `category` | VARCHAR(12) |  | Sí | Valores: REGLAMENTO, CONTRATO, ACTA, SEGURO, MANUAL, OTRO |
+| `title` | VARCHAR(150) |  | Sí |  |
+| `description` | VARCHAR(300) |  | Sí |  |
+| `file` | VARCHAR(100) |  | Sí |  |
+| `original_name` | VARCHAR(255) |  | Sí |  |
+| `file_size` | INTEGER |  | Sí |  |
+| `uploaded_by_id` | BIGINT | FK → `users_user` | No |  |
+| `is_active` | BOOLEAN |  | Sí |  |
+| `created_at` | TIMESTAMP |  | Sí |  |
+| `updated_at` | TIMESTAMP |  | Sí |  |
+
 **Relaciones del diagrama**
 
 - `users_forumcomment.post_id` → `users_forumpost` (muchos a uno)
@@ -638,6 +662,9 @@ En el diagrama, arriba está la comunidad (foro, reclamos y mascotas), al centro
 - `condo_buildingimprovement.condominium_id` → `condo_condominium` (muchos a uno)
 - `condo_buildingimprovement.related_inspection_id` → `condo_physicalinspection` (muchos a uno, opcional)
 - `condo_buildingimprovement.created_by_id` → `users_user` (muchos a uno, opcional)
+- `condo_condodocument.condominium_id` → `condo_condominium` (muchos a uno)
+- `condo_condodocument.department_id` → `condo_department` (muchos a uno, opcional)
+- `condo_condodocument.uploaded_by_id` → `users_user` (muchos a uno, opcional)
 
 ### Diagrama 5 · Mesa de soporte
 

@@ -170,6 +170,23 @@ CREATE TABLE "condo_buildingimprovement" (
     "created_at" TIMESTAMP NOT NULL
 );
 
+-- Condominios, unidades e infraestructura: Documento del condominio
+CREATE TABLE "condo_condodocument" (
+    "id" BIGSERIAL PRIMARY KEY,
+    "condominium_id" BIGINT NOT NULL,
+    "department_id" BIGINT,
+    "category" VARCHAR(12) NOT NULL,
+    "title" VARCHAR(150) NOT NULL,
+    "description" VARCHAR(300) NOT NULL,
+    "file" VARCHAR(100) NOT NULL,
+    "original_name" VARCHAR(255) NOT NULL,
+    "file_size" INTEGER NOT NULL,
+    "uploaded_by_id" BIGINT,
+    "is_active" BOOLEAN NOT NULL,
+    "created_at" TIMESTAMP NOT NULL,
+    "updated_at" TIMESTAMP NOT NULL
+);
+
 -- Gastos comunes y multas: Gasto Común Global
 CREATE TABLE "expenses_commonexpense" (
     "id" BIGSERIAL PRIMARY KEY,
@@ -279,6 +296,10 @@ CREATE TABLE "security_authorizedvehicle" (
 CREATE TABLE "security_platerecognitionlog" (
     "id" BIGSERIAL PRIMARY KEY,
     "condominium_id" BIGINT NOT NULL,
+    "authorized_by_id" BIGINT,
+    "authorized_at" TIMESTAMP,
+    "authorized_department_id" BIGINT,
+    "authorization_note" VARCHAR(160) NOT NULL,
     "camera_name" VARCHAR(60) NOT NULL,
     "plate_detected" VARCHAR(10) NOT NULL,
     "confidence" NUMERIC(5,2) NOT NULL,
@@ -520,6 +541,9 @@ ALTER TABLE "condo_parkingspot" ADD CONSTRAINT "fk_condo_parkingspot_blocking_sp
 ALTER TABLE "condo_buildingimprovement" ADD CONSTRAINT "fk_condo_buildingimprovement_condominium_id" FOREIGN KEY ("condominium_id") REFERENCES "condo_condominium" ("id");
 ALTER TABLE "condo_buildingimprovement" ADD CONSTRAINT "fk_condo_buildingimprovement_related_inspection_id" FOREIGN KEY ("related_inspection_id") REFERENCES "condo_physicalinspection" ("id");
 ALTER TABLE "condo_buildingimprovement" ADD CONSTRAINT "fk_condo_buildingimprovement_created_by_id" FOREIGN KEY ("created_by_id") REFERENCES "users_user" ("id");
+ALTER TABLE "condo_condodocument" ADD CONSTRAINT "fk_condo_condodocument_condominium_id" FOREIGN KEY ("condominium_id") REFERENCES "condo_condominium" ("id");
+ALTER TABLE "condo_condodocument" ADD CONSTRAINT "fk_condo_condodocument_department_id" FOREIGN KEY ("department_id") REFERENCES "condo_department" ("id");
+ALTER TABLE "condo_condodocument" ADD CONSTRAINT "fk_condo_condodocument_uploaded_by_id" FOREIGN KEY ("uploaded_by_id") REFERENCES "users_user" ("id");
 ALTER TABLE "expenses_commonexpense" ADD CONSTRAINT "fk_expenses_commonexpense_condominium_id" FOREIGN KEY ("condominium_id") REFERENCES "condo_condominium" ("id");
 ALTER TABLE "expenses_expensebill" ADD CONSTRAINT "fk_expenses_expensebill_department_id" FOREIGN KEY ("department_id") REFERENCES "condo_department" ("id");
 ALTER TABLE "expenses_expensebill" ADD CONSTRAINT "fk_expenses_expensebill_common_expense_id" FOREIGN KEY ("common_expense_id") REFERENCES "expenses_commonexpense" ("id");
@@ -537,6 +561,8 @@ ALTER TABLE "security_authorizedvehicle" ADD CONSTRAINT "fk_security_authorizedv
 ALTER TABLE "security_authorizedvehicle" ADD CONSTRAINT "fk_security_authorizedvehicle_department_id" FOREIGN KEY ("department_id") REFERENCES "condo_department" ("id");
 ALTER TABLE "security_authorizedvehicle" ADD CONSTRAINT "fk_security_authorizedvehicle_owner_id" FOREIGN KEY ("owner_id") REFERENCES "users_user" ("id");
 ALTER TABLE "security_platerecognitionlog" ADD CONSTRAINT "fk_security_platerecognitionlog_condominium_id" FOREIGN KEY ("condominium_id") REFERENCES "condo_condominium" ("id");
+ALTER TABLE "security_platerecognitionlog" ADD CONSTRAINT "fk_security_platerecognitionlog_authorized_by_id" FOREIGN KEY ("authorized_by_id") REFERENCES "users_user" ("id");
+ALTER TABLE "security_platerecognitionlog" ADD CONSTRAINT "fk_security_platerecognitionlog_authorized_department_id" FOREIGN KEY ("authorized_department_id") REFERENCES "condo_department" ("id");
 ALTER TABLE "security_platerecognitionlog" ADD CONSTRAINT "fk_security_platerecognitionlog_matched_vehicle_id" FOREIGN KEY ("matched_vehicle_id") REFERENCES "security_authorizedvehicle" ("id");
 ALTER TABLE "security_platerecognitionlog" ADD CONSTRAINT "fk_security_platerecognitionlog_parking_spot_id" FOREIGN KEY ("parking_spot_id") REFERENCES "condo_parkingspot" ("id");
 ALTER TABLE "security_visitorpassqr" ADD CONSTRAINT "fk_security_visitorpassqr_condominium_id" FOREIGN KEY ("condominium_id") REFERENCES "condo_condominium" ("id");
